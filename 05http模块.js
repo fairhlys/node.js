@@ -18,14 +18,14 @@
     端口：应用程序的数字标识，实现不同主机应用程序间的通信
 
   http模块：
-      创建http服务
+      Node.js的http模块允许你创建一个简单的Web服务器，用于处理浏览器（或客户端）的HTTP请求。
     1.导入http模块
       const http = require('http')
     2.创建服务对象：
       const server = http.createServer(函数作为参数 (request,response) => { }  )
           这里的request是对请求报文的封装对象
           这里的response是对响应报文的封装对象
-          当该端口发送了报文就执行回调函数，处理请求报文和响应报文
+          每次有新的HTTP请求到达服务器时，这个回调函数就会被调用一次
     3.监听端口，启动服务
       server.listen(选择要监听的端口号, () => {
           当服务启动成功以后执行该回调函数
@@ -82,7 +82,8 @@
             response.end('') 这个也可以设置响应体，可以是buffer类型，不过也可以不写，但是end是必要且唯一的
             这里的响应体甚至可以直接写html
     6.网页资源加载
-        第一次请求时，返回html，遇见了要引入css，就第二次请求，遇见了要引入script，就第三次请求
+        浏览器收到HTML后，不会停留在服务器端——它解析HTML标签，发现<link href="style.css">或<script src="script.js">，会自动发起新HTTP请求到相对路径（如/style.css）。
+        服务器不关心HTML内容，它只管返回文件。资源加载是浏览器行为。
     7.静态资源和动态资源
         静态资源：内容长时间不发生改变的资源
         动态资源：内容经常改变的资源
