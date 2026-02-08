@@ -108,6 +108,44 @@
     //atguigu.com/web                               与页面URL的协议拼接形成完整URL再发送请求。大型网站用的比较多
         /web                                        与页面URL的协议、主机名、端口拼接形成完整URL再发送请求。中小型网站
         2.相对路径，发送请求时，需要与当前 url路径进行计算
+    9.设置mime（媒体）类型
+        mime类型是一种标准，用来标识文档，文字或字节流的性质和格式
+        结构： [type]/[subType]
+        type是主类型，subType是子类型，比如image/png，text/css，text/html等等
+      http服务可以设置响应头content-type来表明响应体的mime类型，浏览器会根据该类型决定如何处理资源
+      1.获取文件后缀名
+        const path = require('path')
+        let ext = path.extname(filepath).slice(1) //获取文件后缀名
+      2.获取文件对应的类型
+        let mimes = {
+         html: 'text/html',
+         css: 'text/css',
+         js: 'text/javascript',
+         png: 'image/png',
+         jpg: 'image/jpg',
+         gif: 'image/gif',
+         mp4: 'video/mp4',
+         mp3:'audio/mpeg',
+         json:'applocation/json'
+        }
+         let type = mimes[ext] || 'application/octet-stream'
+        response.setHeader('content-type',type+';charset=utf-8')
+    10.完善静态资源的错误处理
+        switch(err.code) {
+          case 'ENOENT':
+            response.statusCode = 404;
+            response.end('<h1>404 NOT FOUND</h1>')
+            break
+          case 'EPREM':
+            response.statusCode = 403;
+            response.end('<h1>403 FORBIDDEN</h1>')
+            break
+          default:
+        }
+    11GET和POST请求：
+        GET请求大小有限制，一般为2k，而POST请求没有大小限制
+
+
     注意事项：
         1.终端中ctrl + c 暂停服务
         2.重启服务才能更新代码内容
@@ -140,6 +178,6 @@ const server = http.createServer((request, response) => {
     response.end(`<table style=" border: 1px solid red"><tr><td></td><td></td><td></td></tr> </table>`) // 设置响应体
 })
 server.listen(9000, () => {
-    console.log('服务启动');
+    console.log('服务启动1');
 
 })
