@@ -10,7 +10,10 @@ express框架：
             res.end()
           })
         如果请求方法是get，请求url是/home，那么就会触发该回调函数
-        aapp.use() 专门用来处理中间件和“兜底”路由
+        app.use() 专门用来处理中间件和“兜底”路由
+            app.use((req, res) => {
+                res.status(404).send('<h1>404</h1>');
+            });
     4.监听端口，启动服务
         app.listen(端口号,() => {
             服务启动，执行该回调函数
@@ -23,7 +26,7 @@ express框架：
         req.path 获取请求路径
         req.query 获取请求查询参数，得到的是对象，比如?后面的键值对
         req.ip 获取客户端的ip地址
-        req.get('host') 获取客户端ip地址和端口号
+        req.get('host') 获取客户端ip地址和端口号,请求头的数据
     6.获取页面路由参数
         访问：/product/456.html
         app.get('/:id.html',callback)
@@ -61,6 +64,50 @@ express框架：
         3.静态资源中间件：
          app.use(express.static(__dirname + 静态资源目录))
          设置了访问静态资源的目录,当要寻找静态资源时，自动会在该目录下寻找
+         app.use(express.static(path.resolve(__dirname, 'package'))) 这行代码配置了静态文件服务，将 package 目录下的文件映射到应用的根路径 / 上。
+        因此，请求 /index.html 时，Express 会从 package 目录中查找并返回 index.html 文件。
+        后续的 app.get('/', ...) 路由永远不会被触发，因为静态中间件 express.static 的优先级更高（它在路由定义之前），它会先处理所有静态文件请求，包括 /index.html。
+        Express 的 express.static默认只找 index.html
+    10.获取请求体数据
+        利用body-parser包
+        const body_parser = require('body-parser')
+        const jsonParser = body_parser.json()
+            //解析json格式请求体
+        const urlencodeParser = body_parser.urlencoded()
+            //解析querystring格式的请求体
+        app.post('/login',urlencodeParser,(req,res)=> {
+            res.send('获取用户数据')
+            urlencodeParser会往req里面添加一个body属性
+        })
+    11.防盗链
+        防止外部网站盗用本网站资源
+        一般都是禁止其他域名的网站来访问本域名的静态资源
+        实现：通过请求头的referer属性的值，指明发送请求的域名
+            app.use((req,res,next) => {
+                //检测请求头中的referer
+                let referer = req.get('referer')
+                if(referer){
+                    let url = new URL(referer)
+                    let hostname = url.hostname
+                    console.log(hostname);
+                    if(hostname !== '127.0.0.1') {
+                        res.status(404).send('<h1>404 NOT FOUND</h1>')
+                        return
+                    }
+                }
+                next()
+            })
+    12.路由模块化
+        看包管理文件夹
+    13.快速搭建express开发骨架
+        pnpm add express-generator -g
+        express -e 文件夹（将生成的文件装在哪个文件夹）
+    14.文件上传
+        formidable
+    15.数据
+    lowdb
+    shortid
+
     
 express路由：
     一个路由的组成有请求方法，路径和回调函数组成
