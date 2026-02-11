@@ -15,10 +15,10 @@ mongodb:
         db.users.updateOne({name:'唐凯峰'},{$set: {age: 21}})
         db.users.remove({name:'侯翠翠'})
     mongoose:
-        对象文档模型库 连接>数据库>集合>文档
+        一个 collection 在 Mongoose 中通常只绑定一个 Schema，通过 mongoose.model(collectionName, schema) 创建 Model 来操作这个 collection。
         回调被完全移除，只返回 Promise
-        用来和mongo db进行交互
-        pnpm add mongoose
+        databases可以有很多collections，但是一个collection只对应一个schema(集合的结构约束),通过mongoose.model(集合, 约束)创造出model对象操作collection
+            pnpm add mongoose
         在js文件中：
         const mongoose = require('mongoose')
         mongoose.connect('mongodb(mongodb协议名)://127.0.0.1:27017/bilibili')，利用promise写then函数
@@ -108,20 +108,49 @@ mongodb:
     bookModel.find({ $or: [{author:'曹雪芹'}, { author:'余华' }] })
     bookModel.find({ $and: [{ price: {$gt: 30} }, {price: {$lt: 70}}] })
 
+    个性化读取：
+        select
+        (async () => {
+            try {
+                const data = await BookModel.find().select({name:'西游记', author: '吴承恩'})
+                console.log(data);
+            }catch(err) {
+                console.log('失败原因',err);
+            }
+        } )()
+        这种就是个性化读取，只读取想要的字段,不过存在筛选
+        (async () => {
+            try {
+                const data = await BookModel.find().select({name:1, author: 1._id:0})
+                console.log(data);
+            }catch(err) {
+                console.log('失败原因',err);
+            }
+        } )() 这种就是不筛选，直接所有的返回name和author字段,同时要求不显示id属性
+    排序：
+       const data = await bookModel.find().select({ name: 1, price: 1, _id: 0 }).sort({ price: 1(1是升序,-1是降序) })
+       sort
+    数据截断:
+        const data = await bookModel.find().select({ name: 1, price: 1, _id: 0 }).skip(3).limit(3).sort({ price: 1})
+    skip:跳过多少条
+    limit:限制取多少条
+
+    mangoose的代码模块化
+        主要研读mongoose模块化测试123
+    
 
 */
 const mongoose = require('mongoose');
 
 // 连接（推荐加一些选项，避免警告）
-mongoose.connect('mongodb://127.0.0.1:27017/bilibili', {
-})
+mongoose.connect('mongodb://127.0.0.1:27017/bilibili')
     .then(() => {
         console.log('数据库连接成功');
 
         // 1. 定义 Schema
         const BookSchema = new mongoose.Schema({
             name: {
-                type:String,
+                type: String,
                 required: true,
                 default: '匿名',
                 unique: true
@@ -129,9 +158,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/bilibili', {
             },
             author: String,
             price: Number,
-            style:{
-                enum: ['言情', '都市', '志怪', '恐怖'],
-                type:String
+            style: {
+                enum: ['言情', '都市', '志怪', '恐怖', '历史'],
+                type: String
             },
             is_hot: Boolean,
             tags: Array,
@@ -142,24 +171,32 @@ mongoose.connect('mongodb://127.0.0.1:27017/bilibili', {
         const BookModel = mongoose.model('books', BookSchema);
 
         // 3. 插入数据（使用 async/await）
+        // (async () => {
+        //     try {
+        //         const newBook = await BookModel.create({
+        //             name: '三国演义',
+        //             author: '罗贯中',
+        //             style:'历史',
+        //             price: 19.9,
+        //             is_hot:true,
+        //             tags: ['历史', '军事', '社会'],
+        //             data:new Date()
+        //         });
+        //         console.log('插入成功：', newBook);
+        //         mongoose.disconnect()
+        //     } catch (err) {
+        //         console.log('插入失败：', err);
+        //         return
+        //     }
+        // })();
         (async () => {
             try {
-                const newBook = await BookModel.create({
-                    name: '西游记',
-                    author: '吴承恩',
-                    style:'志怪',
-                    price: 19.9,
-                    is_hot:true,
-                    tags: ['鬼怪', '励志', '社会'],
-                    data:new Date()
-                });
-                console.log('插入成功：', newBook);
-                mongoose.disconnect()
+                const data = await BookModel.find().select({ name: 1, author: 1, _id: 0 })
+                console.log(data);
             } catch (err) {
-                console.log('插入失败：', err);
-                return
+                console.log('失败原因', err);
             }
-        })();
+        })()
     })
     .catch((err) => {
         console.log('数据库连接失败：', err);

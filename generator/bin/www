@@ -3,7 +3,8 @@
 /**
  * Module dependencies.
  */
-
+const connectDB = require('../../mongoose模块化测试1')
+connectDB()
 var app = require('../app');
 var debug = require('debug')('generator:server');
 var http = require('http');

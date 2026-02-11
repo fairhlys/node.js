@@ -109,6 +109,14 @@ express框架：
     shortid
 
     
+app = express() 是整个服务器，负责全局配置、启动监听、挂载路由
+router = express.Router() 是路由的小分组，用来按模块拆分代码，让 app.js 保持简洁
+你可以把一个个 router “挂”到 app 上，就像把各个部门安排到大楼的不同楼层：
+    app.use('/users', userRouter)     // 用户部在 /users 楼层
+    app.use('/orders', orderRouter)   // 订单部在 /orders 楼层
+    app.use('/admin', adminRouter)    // 管理部在 /admin 楼层
+
+    
 express路由：
     一个路由的组成有请求方法，路径和回调函数组成
     express中提供了一系列方法，可以很方便的使用路由，使用格式；

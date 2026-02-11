@@ -1,0 +1,107 @@
+{
+    "user": "Ronald",
+    "location": "Singapore",
+    "current_time": "2026-02-11 15:46 +08",
+    "category": "2026热门/最受期待电影",
+    "movies": [
+        {
+            "title": "沙丘3 (Dune: Part Three)",
+            "director": "丹尼斯·维伦纽瓦 (Denis Villeneuve)",
+            "expected_release": "2026年底 (预计12月)",
+            "genre": [
+                "科幻",
+                "史诗",
+                "冒险"
+            ],
+            "cast": [
+                "提莫西·查拉梅",
+                "赞达亚",
+                "丽贝卡·弗格森"
+            ],
+            "description": "保罗·阿崔迪的黑暗面进一步展开，沙虫与沙漠战争继续升级，IMAX观影首选之一，预计与复联5同档期大对决。",
+            "hype_level": "极高"
+        },
+        {
+            "title": "复仇者联盟：末日崛起 / 毁灭之日 (Avengers: Doomsday)",
+            "director": "安东尼 & 乔·罗素 (或新团队)",
+            "expected_release": "2026年底 (预计12月)",
+            "genre": [
+                "超级英雄",
+                "动作",
+                "科幻"
+            ],
+            "cast": [
+                "罗伯特·唐尼 Jr. (毁灭博士)",
+                "克里斯·埃文斯?",
+                "众多MCU角色"
+            ],
+            "description": "毁灭博士登场，MCU重振旗鼓之作，法国观众期待度排名第一。",
+            "hype_level": "爆炸级"
+        },
+        {
+            "title": "奥德赛 (The Odyssey)",
+            "director": "克里斯托弗·诺兰 (Christopher Nolan)",
+            "expected_release": "2026年中/下半年",
+            "genre": [
+                "史诗",
+                "冒险",
+                "神话"
+            ],
+            "cast": [
+                "未知阵容，但诺兰御用演员可能性高"
+            ],
+            "description": "诺兰版《奥德赛》，大海怪、史诗海战，IMAX格式拍摄，作者型导演新作。",
+            "hype_level": "极高"
+        },
+        {
+            "title": "蜘蛛人：重生日 / 崭新之日 (Spider-Man: Brand New Day)",
+            "director": "未知 (可能Destin Daniel Cretton等)",
+            "expected_release": "2026年中",
+            "genre": [
+                "超级英雄",
+                "动作",
+                "青春"
+            ],
+            "cast": [
+                "汤姆·霍兰德?"
+            ],
+            "description": "全新篇章蜘蛛侠，摆脱多元宇宙后重新出发。",
+            "hype_level": "很高"
+        },
+        {
+            "title": "镖人：风起大漠",
+            "director": "袁和平 (动作指导)",
+            "expected_release": "2026春节档 (2月左右)",
+            "genre": [
+                "武侠",
+                "动作",
+                "古装"
+            ],
+            "cast": [
+                "吴京",
+                "谢霆锋",
+                "于适",
+                "陈丽君"
+            ],
+            "description": "中国漫画改编顶级武侠，动作场面期待拉满，李连杰可能惊喜加盟。",
+            "hype_level": "华语圈极高"
+        },
+        {
+            "title": "穿著Prada的恶魔2 (The Devil Wears Prada 2)",
+            "director": "未知",
+            "expected_release": "2026年5月左右",
+            "genre": [
+                "喜剧",
+                "时尚",
+                "剧情"
+            ],
+            "cast": [
+                "安妮·海瑟薇",
+                "梅丽尔·斯特里普回归?"
+            ],
+            "description": "经典时尚喜剧续集，时尚圈再次battle。",
+            "hype_level": "中高"
+        }
+    ],
+    "note": "以上数据基于2026年2月网络讨论热度与已公布信息，实际档期可能调整。想看哪一部最期待？或者需要更详细的某一部电影JSON？"
+}
